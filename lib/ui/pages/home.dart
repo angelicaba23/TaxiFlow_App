@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/pages/user.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:geolocator/geolocator.dart';
 import 'package:custom_switch/custom_switch.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var locationMessage = "";
+  var Message = '';
   var infoPhone = "";
   var timeStamp = "";
   var stop = false;
@@ -22,12 +21,11 @@ class _MyHomePageState extends State<MyHomePage> {
   var longitude;
   var timestamp;
 
+  String licensePlate = "AAA-000";
   String host1 = "angelica.hopto.org";
   String host2 = "taxiflow.zapto.org";
   String host3 = "dierickb.hopto.org";
-
   bool isSwitched = false;
-
   @override
   void initState() {
     super.initState();
@@ -120,19 +118,18 @@ class _MyHomePageState extends State<MyHomePage> {
         timer.cancel();
         setState(() {
           locationMessage = "Last position: $latitude , $longitude\n"
-              "\n"
               "Last Timestamp: $timestamp";
         });
       } else {
         var position = await Geolocator()
             .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         setState(() {
-          latitude = double.parse(position.latitude.toStringAsFixed(7));
-          longitude = double.parse(position.longitude.toStringAsFixed(7));
+          latitude = position.latitude.toStringAsFixed(7);
+          longitude = position.longitude.toStringAsFixed(7);
           timestamp = position.timestamp.toLocal();
           locationMessage = "Current position: $latitude , $longitude\n"
-              "\n"
-              "Current Timestamp: $timestamp";
+              "Current Timestamp: $timestamp - License Plate: $licensePlate";
+          Message = locationMessage;
         });
 
         udpSocket(host1);
@@ -145,11 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
   void udpSocket(host) async {
     InternetAddress.lookup(host).then((value) {
       value.forEach((element) async {
-        var ip1 = (element.address);
+        var ip = (element.address);
         RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
             .then((RawDatagramSocket socket) {
-          socket.send(locationMessage.codeUnits, InternetAddress(ip1), 9000);
-          print(locationMessage);
+          socket.send(Message.codeUnits, InternetAddress(ip), 9000);
+          print(Message);
         });
       });
     });
