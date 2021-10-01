@@ -7,6 +7,12 @@ import 'package:custom_switch/custom_switch.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage(
+      {Key? key, required this.name, required this.id, required this.licensep})
+      : super(key: key);
+  final String name;
+  final String id;
+  final String licensep;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -14,17 +20,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var locationMessage = "";
   var Message = '';
+  var msg = {};
   var infoPhone = "";
   var timeStamp = "";
   var stop = false;
   var latitude;
   var longitude;
   var timestamp;
+  var licensePlate;
 
-  String licensePlate = "AAA-000";
-  String host1 = "angelica.hopto.org";
-  String host2 = "taxiflow.zapto.org";
-  String host3 = "dierickb.hopto.org";
+  String host1 = "taxiflow.ddns.net";
+  String host2 = "taxiflow.bounceme.net";
+  String host3 = "diericktaxiflow.hopto.org";
+  String host4 = "dojuan.hopto.org";
+  String host5 = "anelka137.ddns.net";
+  String host6 = "angelica.hopto.org";
+
   bool isSwitched = false;
   @override
   void initState() {
@@ -113,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void sendLocation(bool value) async {
     //bool stop = true;
+    licensePlate = widget.licensep;
     var timer = Timer.periodic(Duration(seconds: 5), (timer) async {
       if (isSwitched == false) {
         timer.cancel();
@@ -128,13 +140,21 @@ class _MyHomePageState extends State<MyHomePage> {
           longitude = position.longitude.toStringAsFixed(7);
           timestamp = position.timestamp.toLocal();
           locationMessage = "Current position: $latitude , $longitude\n"
-              "Current Timestamp: $timestamp - License Plate: $licensePlate";
-          Message = locationMessage;
+              "Current Timestamp: $timestamp";
+          Message = "$latitude$longitude$timestamp$licensePlate";
+          msg['lat'] = '$latitude';
+          msg['lon'] = '$longitude';
+          msg['ts'] = '$timestamp';
+          msg['lp'] = '$licensePlate';
+          print(msg);
         });
 
         udpSocket(host1);
         udpSocket(host2);
         udpSocket(host3);
+        udpSocket(host4);
+        udpSocket(host5);
+        udpSocket(host6);
       }
     });
   }
@@ -145,8 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
         var ip = (element.address);
         RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
             .then((RawDatagramSocket socket) {
-          socket.send(Message.codeUnits, InternetAddress(ip), 9000);
-          print(Message);
+          socket.send(msg.codeUnits, InternetAddress(ip), 9000);
         });
       });
     });
@@ -154,7 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _showSecondPage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
-      return UserPage();
+      return UserPage(
+          name: widget.name, id: widget.id, licensep: widget.licensep);
     });
     Navigator.of(context).push(route);
   }

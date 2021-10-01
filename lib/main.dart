@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         fontFamily: "manteka",
       ),
-      home: MyHomePage(),
+      home: MyHomePage(name: "Angelica", id: "1234567890", licensep: "AAA-000"),
     );
   }
 }
