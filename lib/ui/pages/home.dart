@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
         var ip = (element.address);
         RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
             .then((RawDatagramSocket socket) {
-          socket.send(msg.codeUnits, InternetAddress(ip), 9000);
+          socket.send(Message.codeUnits, InternetAddress(ip), 9000);
         });
       });
     });
