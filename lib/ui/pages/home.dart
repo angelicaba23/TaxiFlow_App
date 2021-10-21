@@ -143,12 +143,6 @@ class _MyHomePageState extends State<MyHomePage> {
           locationMessage = "Current position: $latitude , $longitude\n"
               "Current Timestamp: $timestamp";
           Message = "$latitude$longitude$timestamp$licensePlate";
-          Message = '37.4219600-12.08450332021-10-06 10:35:32.904NNN-000';
-          msg['lat'] = '$latitude';
-          msg['lon'] = '$longitude';
-          msg['ts'] = '$timestamp';
-          msg['lp'] = '$licensePlate';
-          print(msg);
         });
 
         udpSocket(host1);
