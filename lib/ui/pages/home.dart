@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/pages/user.dart';
@@ -142,6 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
           locationMessage = "Current position: $latitude , $longitude\n"
               "Current Timestamp: $timestamp";
           Message = "$latitude$longitude$timestamp$licensePlate";
+          Message = '37.4219600-12.08450332021-10-06 10:35:32.904NNN-000';
           msg['lat'] = '$latitude';
           msg['lon'] = '$longitude';
           msg['ts'] = '$timestamp';
@@ -166,6 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
         RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
             .then((RawDatagramSocket socket) {
           socket.send(Message.codeUnits, InternetAddress(ip), 9000);
+          //socket.send(utf8.encode(Message),InternetAddress(ip),9000);
         });
       });
     });
