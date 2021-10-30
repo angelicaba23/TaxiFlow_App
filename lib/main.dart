@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ui/pages/bluetooth_page.dart';
 import 'package:flutter_application_1/ui/pages/home.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         fontFamily: "manteka",
       ),
+      //home: BluetoothApp(),
       home: MyHomePage(name: "Angelica", id: "1234567890", licensep: "AAA-000"),
     );
   }

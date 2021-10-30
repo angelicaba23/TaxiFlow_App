@@ -36,6 +36,7 @@ dependencies:
   google_maps_flutter: ^2.0.8
   provider: ^5.0.0
   location: ^4.3.0
+  flutter_bluetooth_serial: ^0.4.0
 
 
 dev_dependencies:

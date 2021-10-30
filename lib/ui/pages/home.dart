@@ -7,6 +7,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:custom_switch/custom_switch.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'bluetooth_page.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage(
       {Key? key, required this.name, required this.id, required this.licensep})
@@ -112,13 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.refresh),
-        onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => super.widget));
-        },
+        backgroundColor: Colors.lightBlue,
+        child: Icon(Icons.bluetooth_connected),
+        onPressed: () {_showBluetoothPage(context);},
       ),
     );
   }
@@ -172,6 +170,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final route = MaterialPageRoute(builder: (BuildContext context) {
       return UserPage(
           name: widget.name, id: widget.id, licensep: widget.licensep);
+    });
+    Navigator.of(context).push(route);
+  }
+
+  void _showBluetoothPage(BuildContext context) {
+    final route = MaterialPageRoute(builder: (BuildContext context) {
+      return BluetoothApp();
     });
     Navigator.of(context).push(route);
   }
