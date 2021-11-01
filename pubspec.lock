@@ -14,7 +14,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.1"
+    version: "2.6.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -35,7 +35,7 @@ packages:
       name: charcode
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.1"
+    version: "1.2.0"
   clock:
     dependency: transitive
     description:
@@ -103,14 +103,14 @@ packages:
       name: flutter_bluetooth_serial
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0"
+    version: "0.2.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -141,14 +141,14 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.8"
+    version: "2.0.9"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
       name: google_maps_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.3"
   http:
     dependency: transitive
     description:
@@ -218,14 +218,14 @@ packages:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.3.0"
   mime:
     dependency: transitive
     description:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   nested:
     dependency: transitive
     description:
@@ -267,14 +267,14 @@ packages:
       name: platform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.2"
   plugin_platform_interface:
     dependency: transitive
     description:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   provider:
     dependency: "direct main"
     description:
@@ -288,7 +288,7 @@ packages:
       name: rikulo_commons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.6.0+2"
+    version: "4.6.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -335,7 +335,7 @@ packages:
       name: stream
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.6.1+1"
   stream_channel:
     dependency: transitive
     description:
@@ -377,7 +377,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.2"
+    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:

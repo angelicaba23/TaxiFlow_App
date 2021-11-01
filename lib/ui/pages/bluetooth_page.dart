@@ -2,10 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-
-// For using PlatformException
-import 'package:flutter/services.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
@@ -23,9 +19,9 @@ class _BluetoothAppState extends State<BluetoothApp> {
   // Get the instance of the Bluetooth
   FlutterBluetoothSerial _bluetooth = FlutterBluetoothSerial.instance;
   // Track the Bluetooth connection with the remote device
-  late BluetoothConnection connection;
+  BluetoothConnection? connection;
 
-  late int _deviceState;
+  int? _deviceState;
 
   bool isDisconnecting = false;
 
@@ -33,17 +29,17 @@ class _BluetoothAppState extends State<BluetoothApp> {
     'onBorderColor': Colors.green,
     'offBorderColor': Colors.red,
     'neutralBorderColor': Colors.transparent,
-    'onTextColor': Colors.lightGreen,
-    'offTextColor': Colors.redAccent,
+    'onTextColor': Colors.green,
+    'offTextColor': Colors.red,
     'neutralTextColor': Colors.blue,
   };
 
   // To track whether the device is still connected to Bluetooth
-  bool get isConnected => connection != null && connection.isConnected;
+  bool get isConnected => connection != null && connection!.isConnected;
 
   // Define some variables, which will be required later
   List<BluetoothDevice> _devicesList = [];
-  late BluetoothDevice _device;
+  BluetoothDevice? _device;
   bool _connected = false;
   bool _isButtonUnavailable = false;
 
@@ -84,11 +80,9 @@ class _BluetoothAppState extends State<BluetoothApp> {
     // Avoid memory leak and disconnect
     if (isConnected) {
       isDisconnecting = true;
-      connection.dispose();
-      //connection = null;
-      print(connection);
+      connection!.dispose();
+      connection = null;
     }
-
     super.dispose();
   }
 
@@ -117,7 +111,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
     // To get the list of paired devices
     try {
       devices = await _bluetooth.getBondedDevices();
-    } on PlatformException {
+    } catch(exception) {
       print("Error");
     }
 
@@ -246,10 +240,10 @@ class _BluetoothAppState extends State<BluetoothApp> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            DropdownButton(
+                            DropdownButton<BluetoothDevice>(
                               items: _getDeviceItems(),
-                              //onChanged: (value) =>
-                                 //setState(() => _device = value),
+                              onChanged: (value) =>
+                                  setState(() => _device = value!),
                               value: _devicesList.isNotEmpty ? _device : null,
                             ),
                             RaisedButton(
@@ -267,11 +261,6 @@ class _BluetoothAppState extends State<BluetoothApp> {
                         child: Card(
                           shape: RoundedRectangleBorder(
                             side: new BorderSide(
-                              color: _deviceState == 0
-                                  ? Colors.white24
-                                  : _deviceState == 1
-                                  ? Colors.red
-                                  : Colors.blue,
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(4.0),
@@ -362,9 +351,8 @@ class _BluetoothAppState extends State<BluetoothApp> {
       ));
     } else {
       _devicesList.forEach((device) {
-        String? dname = device.name;
         items.add(DropdownMenuItem(
-          child: Text(dname!),
+          child: Text(device.name as String),
           value: device,
         ));
       });
@@ -381,7 +369,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
       show('No device selected');
     } else {
       if (!isConnected) {
-        await BluetoothConnection.toAddress(_device.address)
+        await BluetoothConnection.toAddress(_device!.address)
             .then((_connection) {
           print('Connected to the device');
           connection = _connection;
@@ -389,7 +377,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
             _connected = true;
           });
 
-          connection.input!.listen(null).onDone(() {
+          connection!.input?.listen(null).onDone(() {
             if (isDisconnecting) {
               print('Disconnecting locally!');
             } else {
@@ -443,9 +431,9 @@ class _BluetoothAppState extends State<BluetoothApp> {
       _deviceState = 0;
     });
 
-    await connection.close();
+    await connection!.close();
     show('Device disconnected');
-    if (!connection.isConnected) {
+    if (!connection!.isConnected) {
       setState(() {
         _connected = false;
         _isButtonUnavailable = false;
@@ -456,10 +444,8 @@ class _BluetoothAppState extends State<BluetoothApp> {
   // Method to send message,
   // for turning the Bluetooth device on
   void _sendOnMessageToBluetooth() async {
-
-    List<int> bytes = utf8.encode('1' + "\r\n");
-    connection.output.add(Uint8List.fromList(bytes));
-    await connection.output.allSent;
+    connection!.output.add(utf8.encode("1" + "\r\n") as Uint8List);
+    await connection!.output.allSent;
     show('Device Turned On');
     setState(() {
       _deviceState = 1; // device on
@@ -469,9 +455,8 @@ class _BluetoothAppState extends State<BluetoothApp> {
   // Method to send message,
   // for turning the Bluetooth device off
   void _sendOffMessageToBluetooth() async {
-    List<int> bytes = utf8.encode("0" + "\r\n");
-    connection.output.add(Uint8List.fromList(bytes));
-    await connection.output.allSent;
+    connection!.output.add(utf8.encode("0" + "\r\n")as Uint8List);
+    await connection!.output.allSent;
     show('Device Turned Off');
     setState(() {
       _deviceState = -1; // device off
