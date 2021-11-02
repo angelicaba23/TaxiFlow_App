@@ -22,6 +22,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isStopped = false;
   var locationMessage = "";
   var rpmMessage = "";
   var Message = '';
@@ -54,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     while (await Permission.locationWhenInUse.isDenied) {
       Permission.locationWhenInUse.request();
     }
+    findInfo();
   }
 
   Widget build(BuildContext context) {
@@ -143,20 +145,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  
-
-  void sendLocation(bool value) async {
+  findInfo() async {
     //bool stop = true;
     licensePlate = widget.licensep;
     rpm = widget.rpm;
-    var timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-      if (isSwitched == false) {
-        timer.cancel();
-        setState(() {
-          locationMessage = "Last position: $latitude , $longitude\n"
-              "Last Timestamp: $timestamp";
-        });
-      } else {
+   Timer.periodic(Duration(seconds: 1), (timer) async {
+         if (isStopped) {
+           timer.cancel();
+         }
         var position = await Geolocator()
             .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         setState(() {
@@ -168,14 +164,29 @@ class _MyHomePageState extends State<MyHomePage> {
           rpmMessage = "$rpm rpm";
           Message = "$latitude$longitude$timestamp$licensePlate$rpm";
           print(Message);
+          print(Message);
+          print(Message);
+          print(Message);
+          print(Message);
+          print(Message);
         });
+      });
+    }
 
-        udpSocket(host1);
-        udpSocket(host2);
-        udpSocket(host3);
-        udpSocket(host4);
-        udpSocket(host5);
-        udpSocket(host6);
+
+  void sendLocation(bool value) async {
+    var timer = Timer.periodic(Duration(seconds: 5), (timer) async {
+      if (isSwitched == false) {
+        timer.cancel();
+      }else{
+        if (isSwitched == true) {
+          udpSocket(host1);
+          udpSocket(host2);
+          udpSocket(host3);
+          udpSocket(host4);
+          udpSocket(host5);
+          udpSocket(host6);
+        }
       }
     });
   }
