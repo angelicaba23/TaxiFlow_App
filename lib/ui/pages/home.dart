@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            4
               Text("WELCOME!",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
