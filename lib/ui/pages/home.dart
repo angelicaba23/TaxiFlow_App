@@ -176,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _showBluetoothPage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
-      return BluetoothApp();
+      return BluetoothApp(name: widget.name, id: widget.id, licensep: widget.licensep);
     });
     Navigator.of(context).push(route);
   }
