@@ -9,6 +9,15 @@
 > Home Page
 
 <img src="/screenshots/1.png " height="400" title="Home Page">
+
+> User Page
+
+<img src="/screenshots/3.png " height="400" title="User Page">
+
+> User Configuration Page
+
+<img src="/screenshots/4.png " height="400" title="User Configuration Page">
+
 > Bluetooth Page
 
 <img src="/screenshots/2.png " height="400" title="Bluetooth Page">
