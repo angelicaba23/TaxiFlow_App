@@ -8,11 +8,12 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 class BluetoothApp extends StatefulWidget {
   const BluetoothApp(
-      {Key? key, required this.name, required this.id, required this.licensep})
+      {Key? key, required this.name, required this.id, required this.licensep, required this.rpm})
       : super(key: key);
   final String name;
   final String id;
   final String licensep;
+  final int rpm;
   @override
   _BluetoothAppState createState() => _BluetoothAppState();
 }
@@ -50,6 +51,8 @@ class _BluetoothAppState extends State<BluetoothApp> {
   BluetoothDevice? _device;
   bool _connected = false;
   bool _isButtonUnavailable = false;
+
+  var rpm;
 
   @override
   void initState() {
@@ -232,6 +235,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
                           onChanged: (bool value) {
                             future() async {
                               if (value) {
+                                rpm = 111;
                                 await FlutterBluetoothSerial.instance
                                     .requestEnable();
                               } else {
@@ -557,7 +561,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
   void _showHomePage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
       return MyHomePage(
-          name: widget.name, id: widget.id, licensep: widget.licensep);
+          name: widget.name, id: widget.id, licensep: widget.licensep, rpm: widget.rpm);
     });
     Navigator.of(context).push(route);
   }

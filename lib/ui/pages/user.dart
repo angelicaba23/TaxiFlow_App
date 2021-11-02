@@ -11,11 +11,12 @@ import 'package:permission_handler/permission_handler.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage(
-      {Key? key, required this.name, required this.id, required this.licensep})
+      {Key? key, required this.name, required this.id, required this.licensep, required this.rpm})
       : super(key: key);
   final String name;
   final String id;
   final String licensep;
+  final int rpm;
   @override
   _UserPage createState() => _UserPage();
 }
@@ -84,7 +85,7 @@ class _UserPage extends State<UserPage> {
   void _showHomePage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
       return MyHomePage(
-          name: widget.name, id: widget.id, licensep: widget.licensep);
+          name: widget.name, id: widget.id, licensep: widget.licensep, rpm: widget.rpm);
     });
     Navigator.of(context).push(route);
   }
@@ -92,7 +93,7 @@ class _UserPage extends State<UserPage> {
   void _showUserConfPage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
       return UserConfPage(
-          name: widget.name, id: widget.id, licensep: widget.licensep);
+          name: widget.name, id: widget.id, licensep: widget.licensep, rpm: widget.rpm);
     });
     Navigator.of(context).push(route);
   }

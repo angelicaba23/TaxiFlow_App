@@ -11,17 +11,19 @@ import 'bluetooth_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage(
-      {Key? key, required this.name, required this.id, required this.licensep})
+      {Key? key, required this.name, required this.id, required this.licensep, required this.rpm})
       : super(key: key);
   final String name;
   final String id;
   final String licensep;
+  final int rpm;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   var locationMessage = "";
+  var rpmMessage = "";
   var Message = '';
   var msg = {};
   var infoPhone = "";
@@ -31,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var longitude;
   var timestamp;
   var licensePlate;
+  var rpm;
 
   String host1 = "taxiflow.ddns.net";
   String host2 = "taxiflow.bounceme.net";
@@ -79,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            4
+            children: [
               Text("WELCOME!",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -89,6 +92,25 @@ class _MyHomePageState extends State<MyHomePage> {
               Image.asset(
                 "assets/location.gif",
                 height: 350,
+              ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.transparent,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.blue,
+                        spreadRadius: 3),
+                  ],
+                ),
+                child: Text(rpmMessage,
+                    style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 40,
+                    color: Color.fromARGB(188,224,251,255)),
+              ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -114,17 +136,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.blue,
         child: Icon(Icons.bluetooth_connected),
         onPressed: () {_showBluetoothPage(context);},
       ),
     );
   }
 
+  
+
   void sendLocation(bool value) async {
     //bool stop = true;
     licensePlate = widget.licensep;
-    var timer = Timer.periodic(Duration(seconds: 5), (timer) async {
+    rpm = widget.rpm;
+    var timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       if (isSwitched == false) {
         timer.cancel();
         setState(() {
@@ -139,8 +164,10 @@ class _MyHomePageState extends State<MyHomePage> {
           longitude = position.longitude.toStringAsFixed(7);
           timestamp = position.timestamp.toLocal();
           locationMessage = "Current position: $latitude , $longitude\n"
-              "Current Timestamp: $timestamp";
-          Message = "$latitude$longitude$timestamp$licensePlate";
+              "Current Timestamp: $timestamp\n";
+          rpmMessage = "$rpm rpm";
+          Message = "$latitude$longitude$timestamp$licensePlate$rpm";
+          print(Message);
         });
 
         udpSocket(host1);
@@ -169,14 +196,14 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showSecondPage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
       return UserPage(
-          name: widget.name, id: widget.id, licensep: widget.licensep);
+          name: widget.name, id: widget.id, licensep: widget.licensep, rpm: widget.rpm);
     });
     Navigator.of(context).push(route);
   }
 
   void _showBluetoothPage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
-      return BluetoothApp(name: widget.name, id: widget.id, licensep: widget.licensep);
+      return BluetoothApp(name: widget.name, id: widget.id, licensep: widget.licensep, rpm: widget.rpm);
     });
     Navigator.of(context).push(route);
   }

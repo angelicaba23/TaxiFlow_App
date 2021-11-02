@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "manteka",
       ),
       //home: BluetoothApp(),
-      home: MyHomePage(name: "Angelica", id: "1234567890", licensep: "AAA-000"),
+      home: MyHomePage(name: "Angelica", id: "1234567890", licensep: "AAA-000", rpm:000),
     );
   }
 }
