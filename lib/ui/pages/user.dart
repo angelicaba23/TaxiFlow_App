@@ -66,7 +66,7 @@ class _UserPage extends State<UserPage> {
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image: NetworkImage(
-                          "https://www.movilidadbogota.gov.co/web/sites/default/files/Noticias/26-08-2020/jose_castaneda.jpg")))),
+                          "https://www.vit.taxi/assets/img/vit/conductor.jpg")))),
           Text(widget.name, textScaleFactor: 2.0),
           Text("ID: " + widget.id, textScaleFactor: 1.5),
           Text("PLACA: " + widget.licensep, textScaleFactor: 1.5),
