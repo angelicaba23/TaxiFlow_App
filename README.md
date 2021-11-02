@@ -6,7 +6,12 @@
 - [Repo](https://github.com/angelicaba23/TaxiFlow_App "TaxiFlow App Repo")
 
 ## 📱Screenshots
+> Home Page
+
 <img src="/screenshots/1.png " height="400" title="Home Page">
+> Bluetooth Page
+
+<img src="/screenshots/2.png " height="400" title="Bluetooth Page">
  
 ## ⚡ Available Commands
 
