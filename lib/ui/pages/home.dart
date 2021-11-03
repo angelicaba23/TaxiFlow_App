@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //bool stop = true;
     licensePlate = widget.licensep;
     rpm = widget.rpm;
-   Timer.periodic(Duration(seconds: 1), (timer) async {
+   Timer.periodic(Duration(seconds: 3), (timer) async {
          if (isStopped) {
            timer.cancel();
          }

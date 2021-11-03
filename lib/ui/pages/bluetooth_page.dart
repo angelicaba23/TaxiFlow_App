@@ -8,7 +8,11 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 class BluetoothApp extends StatefulWidget {
   const BluetoothApp(
-      {Key? key, required this.name, required this.id, required this.licensep, required this.rpm})
+      {Key? key,
+      required this.name,
+      required this.id,
+      required this.licensep,
+      required this.rpm})
       : super(key: key);
   final String name;
   final String id;
@@ -180,7 +184,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              splashColor: Colors.deepPurple,
+              splashColor: Colors.red,
               onPressed: () async {
                 // So, that when new devices are paired
                 // while the app is running, user can refresh
@@ -212,7 +216,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.transparent,
                       boxShadow: [
-                        BoxShadow(color: Colors.grey, spreadRadius: 3),
+                        BoxShadow(color: Colors.lightBlue, spreadRadius: 3),
                       ],
                     ),
                     child: Row(
@@ -224,7 +228,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
                             child: Text(
                               'Enable Bluetooth',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 16,
                               ),
                             ),
@@ -255,6 +259,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
                               setState(() {});
                             });
                           },
+                          activeColor: Color.fromARGB(188, 224, 251, 255),
                         )
                       ],
                     ),
@@ -265,11 +270,10 @@ class _BluetoothAppState extends State<BluetoothApp> {
                     Column(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(40),
-                          child: Text(
-                            "PAIRED DEVICES",
-                            style: TextStyle(fontSize: 24, color: Colors.blue),
-                            textAlign: TextAlign.center,
+                          padding: const EdgeInsets.all(1),
+                          child: Image.asset(
+                            "assets/bluetooth.gif",
+                            height: 150,
                           ),
                         ),
                         Padding(
@@ -280,12 +284,6 @@ class _BluetoothAppState extends State<BluetoothApp> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Text(
-                                    'Device:',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
                                   DropdownButton<BluetoothDevice>(
                                     items: _getDeviceItems(),
                                     onChanged: (value) =>
@@ -294,16 +292,16 @@ class _BluetoothAppState extends State<BluetoothApp> {
                                         ? _device
                                         : null,
                                   ),
+                                  RaisedButton(
+                                    onPressed: _isButtonUnavailable
+                                        ? null
+                                        : _connected
+                                            ? _disconnect
+                                            : _connect,
+                                    child: Text(
+                                        _connected ? 'Disconnect' : 'Connect'),
+                                  ),
                                 ],
-                              ),
-                              RaisedButton(
-                                onPressed: _isButtonUnavailable
-                                    ? null
-                                    : _connected
-                                        ? _disconnect
-                                        : _connect,
-                                child:
-                                    Text(_connected ? 'Disconnect' : 'Connect'),
                               ),
                             ],
                           ),
@@ -353,30 +351,33 @@ class _BluetoothAppState extends State<BluetoothApp> {
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    "Revoluciones por minuto",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: _deviceState == 1
-                                          ? colors['onTextColor2']
-                                          : colors['offTextColor2'],
-                                    ),
-                                  ),
-                                  Text(
-                                    "xxxx",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: _deviceState == 0
-                                          ? colors['offTextColor2']
-                                          : _deviceState == 1
-                                          ? colors['onTextColor2']
-                                          : colors['offTextColor2'],
-                                    ),
-                                  ),],
+                                ],
                               ),
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.transparent,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.lightBlue, spreadRadius: 3),
+                              ],
+                            ),
+                            child: Text(
+                              '1 RPM',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 40,
+                                  color: Color.fromARGB(188, 224, 251, 255)),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     Container(
@@ -389,7 +390,7 @@ class _BluetoothAppState extends State<BluetoothApp> {
                     padding: const EdgeInsets.all(20),
                     child: Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           Text(
                             "NOTE: If you cannot find the device in the list, please pair the device by going to the bluetooth settings",
@@ -561,7 +562,10 @@ class _BluetoothAppState extends State<BluetoothApp> {
   void _showHomePage(BuildContext context) {
     final route = MaterialPageRoute(builder: (BuildContext context) {
       return MyHomePage(
-          name: widget.name, id: widget.id, licensep: widget.licensep, rpm: widget.rpm);
+          name: widget.name,
+          id: widget.id,
+          licensep: widget.licensep,
+          rpm: widget.rpm);
     });
     Navigator.of(context).push(route);
   }
